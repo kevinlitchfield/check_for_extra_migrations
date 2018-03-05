@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+require 'check_for_extra_migrations'
+CheckForExtraMigrations.execute
