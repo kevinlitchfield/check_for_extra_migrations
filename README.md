@@ -12,10 +12,8 @@ For example:
 ~ (create-users) $ rake db:migrate
 ~ (create-users) $ git add --all; git commit -m "Create Users"
 ~ (create-users) $ git checkout master
-Migrations have been run that are not present in this branch (master): 20180113151238
-The migration 20180113151238:
-First appeared in commit a2d27b6db1e82f71c8ce7fd40ba0cb133c11785d,
-Which is on these branches:   create-users
+Migrations have been run that are not present in this branch ('master'): 20180113151238.
+* The migration 20180113151238 first appeared in commit a2d27b6db1e82f71c8ce7fd40ba0cb133c11785d, which is on these branches: 'create-users'.
 ~ (master) $
 ```
 
@@ -28,7 +26,7 @@ Which is on these branches:   create-users
 git clone https://github.com/kevinlitchfield/check_for_extra_migrations.git
 cd check_for_extra_migrations
 gem build check_for_extra_migrations.gemspec
-gem install check_for_extra_migrations-0.0.1.gem
+gem install check_for_extra_migrations-0.0.2.gem
 ```
 
 

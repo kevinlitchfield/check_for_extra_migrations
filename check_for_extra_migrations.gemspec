@@ -3,7 +3,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "check_for_extra_migrations"
-  spec.version       = "0.0.1"
+  spec.version       = "0.0.2"
   spec.executables   << 'check_for_extra_migrations'
   spec.authors       = ["Kevin Litchfield"]
   spec.email         = ["kevinlitchfield@users.noreply.github.com"]
