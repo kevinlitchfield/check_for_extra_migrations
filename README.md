@@ -19,6 +19,7 @@ Which is on these branches:   create-users
 ~ (master) $
 ```
 
+
 ## Installation
 
 ### 1. Install gem
@@ -30,6 +31,7 @@ gem build check_for_extra_migrations.gemspec
 gem install check_for_extra_migrations-0.0.1.gem
 ```
 
+
 ### 2. Create hook
 
 In `.git/hooks/post-receive` in your Rails project:
@@ -40,6 +42,14 @@ check_for_extra_migrations
 ```
 
 Run `chmod +x` on `.git/hooks/post-receive`.
+
+
+### 3. Calibrate (if necessary)
+
+If you have deleted migration files in the past that were run and not rolled back, your database's understanding of what migrations you've run (as reflected in the `schema_migrations` table) will be out of sync with what's reflected in your codebase.
+
+Run `check_for_extra_migrations calibrate` to save the ids of those migrations to an `.extra_migrations` file in the root of your Rails project. They will be ignored in the future.
+
 
 ## Limitations
 

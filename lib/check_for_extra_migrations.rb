@@ -66,7 +66,14 @@ module CheckForExtraMigrations
   end
 
   def self.extra_migrations
-    @@_extra_migrations ||= MigrationIDs.from_db - MigrationIDs.from_migrations_dir
+    ignored_migrations =
+      if File.file?('.extra_migrations')
+        Marshal.load(File.read('.extra_migrations'))
+      else
+        []
+      end
+
+    @@_extra_migrations ||= MigrationIDs.from_db - MigrationIDs.from_migrations_dir - ignored_migrations
   end
 
   def self.first_commit_containing(migration_id)
@@ -92,13 +99,31 @@ module CheckForExtraMigrations
     `git rev-parse --abbrev-ref HEAD`.chomp
   end
 
-  def self.execute
-    chdir_to_rails_root
+
+  def self.check_for_extra_migrations
     if !extra_migrations.empty?
       puts "Migrations have been run that are not present in this branch ('#{current_branch}'): #{extra_migrations.join(', ')}."
       extra_migrations.each do |migration_id|
         migration_info(migration_id)
       end
+    end
+  end
+
+  def self.calibrate
+    File.open('.extra_migrations', 'w') do |file|
+      migrations_to_ignore = MigrationIDs.from_db - MigrationIDs.from_migrations_dir
+      file.write(Marshal.dump(migrations_to_ignore))
+      puts "Wrote to #{file.path}."
+    end
+  end
+
+  def self.execute(command)
+    chdir_to_rails_root
+
+    if command == 'calibrate'
+      calibrate
+    else
+      check_for_extra_migrations
     end
   end
 end
